@@ -2,23 +2,18 @@
 This is a job portal web application built with Spring Boot 3, Spring MVC, Thymeleaf, Spring Security, Spring Data JPA, Hibernate, and a MySQL database. It features a secure user registration and login system, a recruiter dashboard to post jobs, and a candidate dashboard to apply for jobs.
 
 Table of Contents
-Introduction
-
-Features
-
-Technologies
-
-Installation
-
-Usage
-
-Contributing
+1.Introduction
+2.Features
+3.Technologies
+4.Installation
+5.Usage
+6.Contributing
 
 
-Introduction
+1.Introduction :
 This project is a Spring Boot application designed to create a job portal system. It includes functionalities like user registration, login, job posting by recruiters, and job application by candidates. The application leverages modern Java technologies and frameworks such as Spring Boot 3, Spring MVC, Spring Security, Spring Data JPA, and Thymeleaf for the front-end rendering. The backend is powered by Hibernate/JPA, and data is stored in a MySQL database.
 
-Features
+2.Features :
 
 ![Home Page](https://github.com/VivekMishra21/JobPortal-Website/raw/main/Screenshot%202025-04-25%20113219.png)
 
@@ -46,7 +41,7 @@ Security: Implementing user authentication and authorization using Spring Securi
 
 Responsive Design: Ensures a user-friendly experience across all devices.
 
-Technologies
+3.Technologies :
 This project is built using the following technologies:
 
 Spring Boot 3: A modern Java framework for building scalable web applications.
@@ -65,7 +60,7 @@ MySQL: Relational database management system to store user and job-related data.
 
 Maven: For managing project dependencies and building the project.
 
-Installation
+4.Installation :
 To run the project locally, follow these steps:
 
 Clone the repository:
@@ -108,7 +103,7 @@ Edit
 mvn spring-boot:run
 Open your browser and navigate to http://localhost:8080 to access the application.
 
-Usage
+5.Usage :
 Once the application is up and running:
 
 For Recruiters:
@@ -125,7 +120,7 @@ Sign up or log in as a candidate.
 
 Browse job listings and apply to the ones you are interested in.
 
-Contributing
+6.Contributing :
 We welcome contributions! To contribute:
 
 Fork the repository.
