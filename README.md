@@ -135,5 +135,3 @@ Commit your changes (git commit -m 'Add feature').
 Push to your forked repository (git push origin feature/your-feature-name).
 
 Open a pull request.
-
->>>>>>> 3c5129fc8233c716bd783b83323f5a9228794611
