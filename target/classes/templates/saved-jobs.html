@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Dashboard</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+
+</head>
+
+<body>
+<header class="navbar navbar-expand-lg navbar-dark">
+    <label class="mt-2 ms-5 font-weight-bold h5"
+    ><a th:href="@{/dashboard/}"> Freshers </a
+    ><span class="logo_com font-weight-bold h5" style="color: white">
+          Hunt </span
+    ></label
+    >
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav m-auto mt-2 mt-lg-0">
+
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Job Seeker')" class="nav-link" th:href="@{/dashboard/}"
+                ><i class="fas fa-search"></i>Search for Jobs</a
+                >
+            </li>
+            <li class="nav-item active">
+                <a sec:authorize="hasAuthority('Job Seeker')" class="nav-link" th:href="@{/saved-jobs/}">
+                    <i class="fa-solid fa-eye"></i>View Saved Jobs</a>
+            </li>
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Job Seeker')" class="nav-link" th:href="@{/job-seeker-profile/}">
+                    <i class="fa-solid fa-pencil"></i>Edit Profile</a>
+            </li>
+        </ul>
+        <img
+                class="rounded-circle me-3"
+                height="50px"
+                width="50x"
+                th:if="${user.photosImagePath!=null}"
+                th:src="@{${user?.photosImagePath}}"
+        />
+        <label th:if="${user.firstName != null && user.lastName != null}"
+               th:text="${user.firstName+' '+user.lastName}"
+               class="nav-item nav-link px-2 me-3">
+        </label>
+
+        <button class="myBtn-light me-5" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+</header>
+<section class="section">
+
+
+    <article>
+
+        <div class="box">
+            <h1 class="primary-title text-center">Saved Jobs</h1>
+        </div>
+
+        <div class="box mt-3 text-center container" style="padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+            <label class="large-label px-3 mb-3" style="font-size: 1.5rem; font-weight: bold;">Results</label>
+
+            <th:block th:each="jobPost:${jobPost}">
+                <a th:href="@{/job-details-apply/{id}(id=${jobPost.jobPostId})}"
+                   style="text-decoration: none; color: black;">
+                    <div onclick="window.location='/job-details-apply/{id}(id=${jobPost.jobPostId})'"
+                         class="job-row"
+                         style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; background-color: #ffffff; cursor: pointer;">
+                        <div class="row">
+                            <!-- Job Title and Candidates Info -->
+                            <div class="col-md-4" style="padding: 10px; display: flex; align-items: center;">
+                                <label class="job-title text-left" style="font-weight: bold; font-size: 1.2rem;">
+                                    [[${jobPost.jobTitle}]]
+                                    <span class="title-span" sec:authorize="hasAuthority('Recruiter')"
+                                          th:text="'('+ @{${jobPost.totalCandidates}}+' Candidates Applied)'"
+                                          style="font-size: 0.9rem; color: #666;">(xx candidates applied)</span>
+                                    <span class="title-span" sec:authorize="hasAuthority('Job Seeker')"
+                                          th:if="${jobPost.isActive == true}"
+                                          style="font-size: 0.9rem; color: #28a745;">(Applied)</span>
+                                </label>
+                            </div>
+
+                            <!-- Job Location -->
+                            <div class="col-md-4 text-center" style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+                                <label th:text="${jobPost.jobLocationId.city+', '+ jobPost.jobLocationId.state}"
+                                       style="font-size: 1rem; color: #555;">
+                                    City State
+                                </label>
+                            </div>
+
+                            <!-- Recruiter Company Name -->
+                            <div class="col-md-4 text-right" style="padding: 10px; display: flex; align-items: center; justify-content: flex-end;">
+                                <label th:text="@{${jobPost.jobCompanyId.name}}"
+                                       style="font-size: 1rem; color: #555;">
+                                    Recruiter Company Name
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </th:block>
+        </div>
+
+
+    </article>
+
+
+</section>
+
+<!--/ bradcam_area  -->
+
+
+<script
+        type="text/javascript"
+        th:src="@{/webjars/jquery/jquery.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/popper.js/umd/popper.min.js}"
+></script>
+<script
+        type="text/javascript"
+        th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+<script>
+
+    $('#job').change(function() {
+      $('#hidJob').val($(this).val());
+    });
+    $('#loc').change(function() {
+      $('#hidLoc').val($(this).val());
+    });
+</script>
+</body>
+</html>

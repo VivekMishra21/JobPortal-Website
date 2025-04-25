@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" style="height: 100%">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Candidate Dashboard</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/font-awesome.min.css}"/>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body th:object="${jobDetails}" style="font-family: 'Montserrat';height: 100%">
+
+<header class="navbar navbar-expand-lg navbar-dark">
+    <label class="mt-2 ms-5 font-weight-bold h5"
+    ><a th:href="@{/dashboard/}">Freshers </a
+    ><span class="logo_com font-weight-bold h5" style="color: white">
+          Hunt</span
+    ></label
+    >
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav m-auto mt-2 mt-lg-0">
+
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Job Seeker')" class="nav-link" th:href="@{/dashboard/}"
+                ><i class="fas fa-search"></i>Search for Jobs</a
+                >
+            </li>
+            <li class="nav-item active">
+                <a sec:authorize="hasAuthority('Job Seeker')" class="nav-link" th:href="@{/saved-jobs/}">
+                    <i class="fa-solid fa-eye"></i>View Saved Jobs</a>
+            </li>
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Job Seeker')" class="nav-link" th:href="@{/job-seeker-profile/}">
+                    <i class="fa-solid fa-pencil"></i>Edit Profile</a>
+            </li>
+
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Recruiter')" class="nav-link" th:href="@{/dashboard/add}"
+                ><i class="fa-solid fa-file-circle-plus"></i>Post New Job</a
+                >
+            </li>
+            <li class="nav-item active">
+                <a sec:authorize="hasAuthority('Recruiter')" class="nav-link" th:href="@{/dashboard/}"
+                > <i class="fa-solid fa-eye"></i>View Your Jobs</a
+                >
+            </li>
+            <li class="nav-item ">
+                <a sec:authorize="hasAuthority('Recruiter')" class="nav-link" th:href="@{/recruiter-profile/}"
+                > <i class="fa-solid fa-pencil"></i>Edit Account</a
+                >
+            </li>
+
+        </ul>
+        <img
+                class="rounded-circle me-3"
+                height="50px"
+                width="50x"
+                th:src="@{${user.photosImagePath}}"
+        />
+        <label th:text="${user.firstName+' '+user.lastName}" class="nav-item nav-link px-2 me-3">John Doe</label>
+
+        <button class="myBtn-light me-5" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+</header>
+
+
+<!-- header-end -->
+<section class="section">
+    <article>
+        <div class="box px-3">
+            <a class="mt-3 ms-3 primary" id="back-link"><i class="fa-solid fa-angle-left me-1"></i> Back to Search
+                Results </a>
+            <h1 class="primary-title text-center mt-3"> Job Details </h1>
+            <div class="ms-3">
+                <h4 th:text="${jobDetails.jobTitle}" class="job-title text-center">Software Engineer</h4>
+                <div class=" text-center mt-1">
+                    <p th:text="${jobDetails.jobLocationId.city+', '+ jobDetails.jobLocationId.state}"
+                       class="m-0"> California, USA</p>
+                    <p th:text="${jobDetails.jobCompanyId.name}">Company</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center box mt-3 container">
+            <label class="large-label px-3 mt-3"> Job Specs </label>
+
+            <div class="job-row" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; background-color: #ffffff;">
+                <div class="row">
+                    <!-- Date Posted -->
+                    <div class="col-md-3" style="padding: 10px; display: flex; align-items: center;">
+                        <label class="text-left" style="font-weight: bold;">
+                            Date Posted:
+                            <span th:text="${jobDetails.postedDate}" style="font-weight: normal;">12 Nov, 2030</span>
+                        </label>
+                    </div>
+
+                    <!-- Salary -->
+                    <div class="col-md-3 text-center" style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+                        <label style="font-weight: bold;">
+                            Salary:
+                            <span th:text="${jobDetails.salary}" style="font-weight: normal;">50k - 120k/y</span>
+                        </label>
+                    </div>
+
+                    <!-- Job Type -->
+                    <div class="col-md-3 text-center" style="padding: 10px; display: flex; align-items: center; justify-content: center;">
+                        <label style="font-weight: bold;">
+                            Type:
+                            <span th:text="${jobDetails.jobType}" style="font-weight: normal;">Full-time</span>
+                        </label>
+                    </div>
+
+                    <!-- Remote -->
+                    <div class="col-md-3 text-right" style="padding: 10px; display: flex; align-items: center; justify-content: flex-end;">
+                        <label style="font-weight: bold;">
+                            Remote:
+                            <span th:text="${jobDetails.remote}" style="font-weight: normal;">Remote</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="px-3 mb-3" sec:authorize="hasAuthority('Job Seeker')">
+                <label class="large-label mt-3 mb-3"> Job Description </label>
+                <div th:utext="${jobDetails.descriptionOfJob}"></div>
+            </div>
+
+
+
+            <div class="px-3 mb-3" sec:authorize="hasAuthority('Recruiter')">
+                <div class="row">
+                    <div class="col-md-9">
+                        <label class="large-label mt-3 mb-3"> Job Description </label>
+                        <div th:utext="${jobDetails.descriptionOfJob}"></div>
+                    </div>
+                    <div class="col-md-3 centerCandidate">
+                        <div class="candidatesApplied">
+                            <label>Candidates Applied for Job</label>
+                            <br>
+                            <th:block th:each="applyList:${applyList}">
+                                <a th:href="@{/job-seeker-profile/{id}(id=${applyList.userId.userAccountId})}"
+                                   class="white"
+                                   th:text="${applyList.userId.firstName+' '+applyList.userId.lastName}">FirstName,
+                                    LastName</a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 px-3 text-center" sec:authorize="hasAuthority('Job Seeker')">
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        <form th:action="@{/job-details/apply/{id}(id=${jobDetails.jobPostId})}" th:object="${applyJob}" method="post">
+                            <button class="btn-sec btn-red w-100" type="submit" th:if="${alreadyApplied == false}">
+                                Apply Now
+                            </button>
+                            <button class="btn-sec btn-red w-100" disabled th:if="${alreadyApplied == true}">
+                                Already Applied
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <form th:action="@{/job-details/save/{id}(id=${jobDetails.jobPostId})}" th:object="${applyJob}" method="post">
+                            <button class="btn-sec btn-black w-100" type="submit" th:if="${alreadySaved == false}">
+                                Save Job
+                            </button>
+                            <button class="btn-sec btn-black w-100" disabled th:if="${alreadySaved == true}">
+                                Already Saved
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-3 px-3" sec:authorize="hasAuthority('Recruiter')" style="display: flex; justify-content: center;">
+                <div class="row" style="width: 100%; max-width: 600px;"> <!-- Set a max width for better centering -->
+                    <div class="col-md-3">
+                        <form th:action="@{/dashboard/edit/{id}(id=${jobDetails.jobPostId})}" method="post">
+                            <button class="btn-sec btn-red w-100" type="submit">Edit Job</button>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <form th:action="@{/dashboard/deleteJob/{id}(id=${jobDetails.jobPostId})}" method="post">
+                            <button class="btn-sec btn-black w-100" type="submit">Delete Job</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </article>
+</section>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script>
+    var element = document.getElementById('back-link');
+    element.setAttribute('href', document.referrer);
+    element.onclick = function() {
+      history.back();
+      return false;
+    }
+</script>
+</body>
+</html>
